@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crazy Gear</title>
+  <link rel="stylesheet" href="./css/main.css">
+
+</head>
+
+<body>
+  <div class="container">
+      <h1>Welcome to Crazy Gear</h1>
+      <li>Use the arrows to move right, left, up and down</li>
+      <li>Right-click to rotate clockwise and left-click to rotate anticlockwise !</li>
+      <li>Catch the falling obstacles with the right cavity shape </li>
+
+      <button id="startButton">Start Game</button>
+  </div>
+  
+
+  <script>
+      const button = document.getElementById('startButton');
+      button.addEventListener('click', () => {
+          window.location.href = './play.html'
+      });
+  </script>
+
+</body>
+</html>

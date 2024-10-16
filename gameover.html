@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game over</title>
+    <link rel="stylesheet" href="./css/main.css">
+</head>
+<body>
+    
+    <div class="container">
+        <h1>Gear damaged</h1>
+        <h3  id="message"> message</h3>
+        <button id="startButton">Try with a new one</button>
+    </div>
+  
+    <script>
+        const button = document.getElementById('startButton');
+        button.addEventListener('click', () => {
+            window.location.href = './play.html'
+        });
+    </script>
+
+</body>
+</html>

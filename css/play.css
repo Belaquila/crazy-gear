@@ -1,0 +1,47 @@
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: rgb(97, 179, 227);
+        
+}
+
+#board {
+    height: 600px;
+    width: 800px;
+    overflow: hidden;
+    border: 2px solid #888 ;
+    background-color: rgb(21, 137, 214);
+    margin-top: 50px;
+    margin-left: 50px;
+    position: relative;
+ 
+}
+
+#player {
+    height: 100px;
+    width: 100px;
+    position : absolute;
+    display: inline-block;
+    
+}
+
+.obstacle {
+    position: absolute;
+
+}
+
+
+#scoreBoard {
+    height: 600px;
+    width: 200px;
+    overflow: hidden;
+    background-color: #68df8a;
+    margin-top: 50px;
+    margin-left: 50px;
+    position: fixed;
+    left: 900px;
+    top: 0px;
+    to
+}
+
