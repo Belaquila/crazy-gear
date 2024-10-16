@@ -38,7 +38,7 @@ class Player {
     if (this.positionX > 0) {
       this.positionX -= 10;
       this.domElement.style.left = this.positionX + "px";
-      this.updateStuckObstacles(); // Update the position of stuck obstacles
+      this.updateStuckObstacles();
     }
   }
 
@@ -47,7 +47,7 @@ class Player {
     if (this.positionY < board.clientHeight - this.height) {
       this.positionY += 10;
       this.domElement.style.bottom = this.positionY + "px";
-      this.updateStuckObstacles(); // Update the position of stuck obstacles
+      this.updateStuckObstacles();
     }
   }
 
@@ -55,7 +55,7 @@ class Player {
     if (this.positionY > 0) {
       this.positionY -= 10;
       this.domElement.style.bottom = this.positionY + "px";
-      this.updateStuckObstacles(); // Update the position of stuck obstacles
+      this.updateStuckObstacles();
     }
   }
 
@@ -128,6 +128,10 @@ class Obstacle {
     }
   }
 
+  removeObstacle() {
+    this.domElement.remove();
+  }
+
   checkCollisionWithPlayer(player) {
     const isColliding =
       player.positionX < this.positionX + this.width &&
@@ -144,10 +148,8 @@ class Obstacle {
       player.cavities[4] !== this.shape &&
       !this.isSticking
     ) {
-      
-    const message = `game over: ${this.shape} does not match ${player.cavities[4]}`
-    location.href ="./gameover.html"
-
+      const message = `game over: ${this.shape} does not match ${player.cavities[4]}`;
+      location.href = "./gameover.html";
     }
   }
 
@@ -158,6 +160,10 @@ class Obstacle {
 
     player.addStuckObstacle(this);
     this.updatePositionBasedOnPlayer(player); // Align immediately
+
+    // is it the right moment to call ?
+    game.updateCount(player);
+    game.updateScore();
   }
 
   // Update the position of the obstacle based on player's position and rotation
@@ -171,8 +177,6 @@ class Obstacle {
     // Update the position of the obstacle based on the player's center position
     this.positionX = playerCenterX - this.width / 2; // Center the obstacle
     this.positionY = playerCenterY - this.height / 2; // Center the obstacle
-
-    // idea const angleInRadians2 = ((player.currentRotation +90)*-1) * (Math.PI / 180); but didn't work ... so the update is manual.
 
     switch (this.shape) {
       case "S":
@@ -196,19 +200,124 @@ class Obstacle {
     }deg)`;
 
     // Apply the new positions
+    this.domElement.style.transition = "0.05s";
     this.domElement.style.left = this.positionX + "px";
     this.domElement.style.bottom = this.positionY + "px";
   }
 }
 
+function isArithmetic(arr) {
+  if (arr.length < 2) return true;
+  let diff = arr[1] - arr[0];
+
+  for (let i = 2; i < arr.length; i++) {
+    if (arr[i] - arr[i - 1] !== diff) {
+      return false;
+    }
+  }
+  return true;
+}
+
+function isGeometric(arr) {
+  if (arr.length < 2 || arr[0] === 0) return false;
+  let ratio = arr[1] / arr[0];
+
+  for (let i = 1; i < arr.length; i++) {
+    if (arr[i] / arr[i - 1] !== ratio) {
+      return false;
+    }
+  }
+  return true;
+}
+
+class Game {
+  constructor(player) {
+    this.player = player;
+    this.count = [0, 0, 0]; //"C", "S", "T"
+    this.duration = 0; // in seconds
+    this.difficulty = 1; // from 1 to 5 , it will make the obstacles fall faster.
+    this.score = 0;
+  }
+
+  updateCount(player) {
+    //access the obstacles array where I put all sticking obstacles and make the count.
+    const countObstaclesContainer = document.getElementById("count");
+
+    this.count = [0, 0, 0];
+
+    if (player.obstacles.length === 0) {
+      document.querySelector("#count-circles span").innerHTML = `0`;
+      document.querySelector("#count-squares span").innerHTML = `0`;
+      document.querySelector("#count-triangles span").innerHTML = `0`;
+    } else {
+      player.obstacles.forEach((obstacle, index) => {
+        if (obstacle.isSticking) {
+          obstacle.shape === "C"
+            ? this.count[0]++
+            : obstacle.shape === "S"
+            ? this.count[1]++
+            : obstacle.shape === "T"
+            ? this.count[2]++
+            : true;
+        }
+      });
+
+      console.log(this.count);
+
+      document.querySelector("#count-circles span").innerHTML = `${this.count[0]}`;
+      document.querySelector("#count-squares span").innerHTML = `${this.count[1]}`;
+      document.querySelector("#count-triangles span").innerHTML = `${this.count[2]}`;
+    }
+  }
+
+  updateScore() {
+    //player should catch the same number of abstacles to score
+    //get an arithmetic list of connt -> surprise
+    //get a gometric list of count -> surprise
+
+    let sum = this.count.reduce((acc, e) => (acc += e), 0);
+
+    if (isArithmetic(this.count) && this.count[0] !== 0) {
+      
+      this.score += sum * 2;
+      console.log(`the sum now is ${sum} and *2 = ${this.score}`);
+      
+      this.count = [0, 0, 0]; // reinitialize count
+      
+      player.obstacles.forEach((obstacle) => {
+        obstacle.removeObstacle();
+      });
+      player.obstacles = [];
+      this.updateCount(player);
+      document.querySelector("#score span").innerHTML = `${this.score}`; // should update immediatly the score but ot does not.
+
+    } else if (isGeometric(this.count) && this.count[0] !== 1) {
+      this.score += sum * 3;
+      this.count = [0, 0, 0]; // reinitialize count
+      player.obstacles.forEach((obstacle) => {
+        obstacle.removeObstacle();
+      });
+      player.obstacles = [];
+      this.updateCount();
+      document.querySelector("#score span").innerHTML = `${this.score}`;
+      
+    }
+
+  }
+}
+
 const player = new Player();
+const game = new Game(player);
+//game.updateCount();
+//game.updateScore();
+
 const obstacleArr = [];
 
 // Create obstacles periodically
 setInterval(() => {
   const newObstacle = new Obstacle();
   obstacleArr.push(newObstacle);
-}, 7000);
+}, 3000);
 
 // Update obstacles
 setInterval(() => {
@@ -216,7 +325,7 @@ setInterval(() => {
     obstacleInstance.moveDown();
     obstacleInstance.checkCollisionWithPlayer(player);
   });
-  updatePositions();
+  game.updateScore(); // not necessary ???
 }, 50);
 
 document.addEventListener("keydown", (e) => {

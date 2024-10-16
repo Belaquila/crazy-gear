@@ -42,6 +42,15 @@ body {
     position: fixed;
     left: 900px;
     top: 0px;
-    to
+
 }
 
+#count-circles, #count-squares, #count-triangles {
+    font-family: Arial, sans-serif;
+    padding-left: 20px;
+}
+
+#score {
+    font-family: Arial, sans-serif;
+    padding-left: 20px;
+}
