@@ -6,11 +6,13 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 50vh;
+    height: 80vh;
 }
 
 .container {
-    margin-bottom: 100px;
+    display: flex;
+    flex-direction: column;
+
 }
 
 
@@ -26,8 +28,10 @@ button {
     padding: 15px 32px;
     font-size: 16px;
     cursor: pointer;
-    margin-top: 100px;
+    margin-top: 50px;
     display: block;
+    border-radius: 30px;
+    
 }
 
 startButton {
@@ -42,3 +46,10 @@ startButton {
 button:hover {
     background-color: #68df8a;
 }
+
+.container img {
+    max-width: 100%; /* Make sure the image doesn't overflow the div */
+    height: auto; /* Maintain aspect ratio */
+    display: block; /* Make the image behave like a block element */
+    margin: 0 auto; /* Center the image */
+  }

@@ -148,8 +148,26 @@ class Obstacle {
       player.cavities[4] !== this.shape &&
       !this.isSticking
     ) {
-      const message = `game over: ${this.shape} does not match ${player.cavities[4]}`;
-      location.href = "./gameover.html";
+      game.collisionCount++;
+      document.querySelector("#integrity span").innerHTML = `${
+        100 - 2 * game.collisionCount
+      }`;
+    }
+
+    if (game.collisionCount === 50) {
+      document.getElementById("player").classList.add("sparkle");
+
+      this.domElement.classList.add("sparkle");
+      sparksEffect("orangeimpact", 25);
+
+      setTimeout(() => {
+        this.domElement.classList.remove("sparkle");
+        //document.getElementById("player").classList.add("sparkle")
+      }, 4000);
+
+      setTimeout(() => {
+        location.href = "./gameover.html";
+      }, 3000);
     }
   }
 
@@ -237,6 +255,7 @@ class Game {
     this.duration = 0; // in seconds
     this.difficulty = 1; // from 1 to 5 , it will make the obstacles fall faster.
     this.score = 0;
+    this.collisionCount = 0;
   }
 
   updateCount(player) {
@@ -262,7 +281,6 @@ class Game {
         }
       });
 
-      console.log(this.count);
 
       document.querySelector("#count-circles span").innerHTML = `${this.count[0]}`;
       document.querySelector("#count-squares span").innerHTML = `${this.count[1]}`;
@@ -276,14 +294,14 @@ class Game {
     //get a gometric list of count -> surprise
 
     let sum = this.count.reduce((acc, e) => (acc += e), 0);
+    let scoreOccurence = 0;
 
     if (isArithmetic(this.count) && this.count[0] !== 0) {
+      scoreOccurence++;
       
       this.score += sum * 2;
-      console.log(`the sum now is ${sum} and *2 = ${this.score}`);
-      
       this.count = [0, 0, 0]; // reinitialize count
-      
+
       player.obstacles.forEach((obstacle) => {
         obstacle.removeObstacle();
       });
@@ -291,25 +309,95 @@ class Game {
       this.updateCount(player);
       document.querySelector("#score span").innerHTML = `${this.score}`; // should update immediatly the score but ot does not.
 
+      sparksEffect("yellowstar", this.score);
+
     } else if (isGeometric(this.count) && this.count[0] !== 1) {
+      scoreOccurence++;
+      
       this.score += sum * 3;
       this.count = [0, 0, 0]; // reinitialize count
       player.obstacles.forEach((obstacle) => {
         obstacle.removeObstacle();
       });
       player.obstacles = [];
-      this.updateCount();
-      document.querySelector("#score span").innerHTML = `${this.score}`;
-      
-    }
 
+      sparksEffect("yellowstar", this.score);
+
+      this.updateCount(player);
+      document.querySelector("#score span").innerHTML = `${this.score}`;
+    }
   }
+}
+
+class Spark {
+  constructor(X, Y, format) {
+    this.sizeRatio = Math.random();
+    this.positionX = X + 100 * Math.random();
+    this.positionY = Y + 100 * Math.random(); //player.positionY + (this.sizeRatio)*100
+    this.width = 5;
+    this.height = 10;
+    this.domElement = null;
+    this.format = format;
+
+    this.createDomElement();
+  }
+
+  createDomElement() {
+    this.domElement = document.createElement("img");
+    this.domElement.src = `./images/${this.format}.svg`;
+    this.domElement.className = "spark";
+    this.domElement.style.width = this.width * (1 + this.sizeRatio) + "px";
+    this.domElement.style.height = this.height * (1 + this.sizeRatio) + "px";
+    this.domElement.style.left = this.positionX + "px";
+    this.domElement.style.bottom = this.positionY + "px";
+
+    const board = document.getElementById("board");
+    board.appendChild(this.domElement);
+  }
+
+  move() {
+    for (let i = 0; i < 10; i++) {
+      this.positionX++;
+      this.positionY--;
+      this.domElement.style.bottom = this.positionY + "px";
+    }
+  }
+
+  sparkDesappear() {
+    this.domElement.remove();
+  }
+
+}
+
+
+function sparksEffect(format, nbSparks) {
+
+  const sparksArr = [];
+
+  for (let i = 0; i < nbSparks; i++) {
+    let X = player.positionX;
+    let Y = player.positionY;
+    let newSpark = new Spark(X, Y, format);
+    sparksArr.push(newSpark);
+  }
+
+  setInterval(() => {
+    sparksArr.forEach((sparkInstance) => {
+      sparkInstance.move();
+    });
+  }, 500);
+
+  setTimeout(() => {
+    setInterval(() => {
+      sparksArr.forEach((sparkInstance) => {
+        sparkInstance.sparkDesappear();
+      });
+    }, 500);
+  }, 3000);
 }
 
 const player = new Player();
 const game = new Game(player);
-//game.updateCount();
-//game.updateScore();
 
 const obstacleArr = [];
 
@@ -325,7 +413,6 @@ setInterval(() => {
     obstacleInstance.moveDown();
     obstacleInstance.checkCollisionWithPlayer(player);
   });
-  game.updateScore(); // not necessary ???
 }, 50);
 
 document.addEventListener("keydown", (e) => {
