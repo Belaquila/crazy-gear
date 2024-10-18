@@ -4,13 +4,17 @@ This is more than a game. It is a philosophy of life.
 
 There should be always a plan to map and overcome obstacles. The best would be to turn them into real opportunities. This forms the mindset of the player.
 
-**Adaptability** : Crazy gear is facing obstacles of 3 different shapes, the player should expose each time the right shape to the obstacles.
+**Adaptability**
+Crazy gear is facing obstacles of 3 different shapes, the player should expose each time the right shape to the obstacles.
 
-**Letting go** : Some of the obstacles are not necessary to face and the player should just let them go !
+**Letting go**
+Some of the obstacles are not necessary to face and the player should just let them go !
 
-**Visualisation** While avoiding or facing obstacles, the player should visualize and update its calculations to make the obstacles form a sequence of winning configuration. The player and the gear are looking for arithmetic and geometric sequences using collected obstacles. It looks like experience !
+**Visualisation**
+While avoiding or facing obstacles, the player should visualize and update its calculations to make the obstacles form a sequence of winning configuration. The player and the gear are looking for arithmetic and geometric sequences using collected obstacles. It looks like experience !
 
-**Resiliance** The gear has a certain level of structure integrity. It will be broken if it stays inactive or if it faces obstacles without any strategy to score !
+**Resiliance** 
+The gear has a certain level of structure integrity. It will be broken if it stays inactive or if it faces obstacles without any strategy to score !
 
 ## How to play
 
