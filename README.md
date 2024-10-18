@@ -1,4 +1,4 @@
-#H1 **Crazy Gear**
+# **Crazy Gear**
 
 This is more than a game. It is a philosophy of life.
 
@@ -12,7 +12,7 @@ There should be always a plan to map and overcome obstacles. The best would be t
 
 **Resiliance** The gear has a certain level of structure integrity. It will be broken if it stays inactive or if it faces obstacles without any strategy to score !
 
-H2 How to play
+## How to play
 
     1. Use the arrows to move right, left, up and down
     2. Right-click to rotate clockwise and left-click to rotate anticlockwise !
@@ -22,9 +22,9 @@ H2 How to play
     6. If the counts of collected figures form a geometric sequence, you score 3 times the total number of figures
     7. The gear empties its collection of obstacles when you score.
 
-H2 How to contribute and make it better
+## How to contribute and make it better
 
-Please reach out and we can discuss these topics and others :
+Please reach out and we can discuss such topics and others :
 
 - Trigonometry to adjust the position of catched obstacles.
 - UX to make it more intuitive. The gear should visualy send the obstacles to the score board once it's full ! This will be more realistic.
@@ -35,4 +35,4 @@ Please reach out and we can discuss these topics and others :
 - Adding Missions.
 - CSS enhancements and mobile version.
 - Multi-shape and colors to diversify missions.
-
+- ...
