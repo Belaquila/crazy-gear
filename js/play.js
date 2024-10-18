@@ -149,20 +149,20 @@ class Obstacle {
       !this.isSticking
     ) {
       game.collisionCount++;
-      document.querySelector("#integrity span").innerHTML = `${
-        100 - 2 * game.collisionCount
-      }`;
+      document.querySelector("#integrity span").innerHTML = `${100 - 2 * game.collisionCount}`;
+      let integrity = 100 - 2 * game.collisionCount;
+      game.updateLifeBar(integrity); 
     }
 
     if (game.collisionCount === 50) {
       document.getElementById("player").classList.add("sparkle");
 
       this.domElement.classList.add("sparkle");
-      sparksEffect("orangeimpact", 25);
+      sparksEffect(player.positionX, player.positionY, "orangeimpact", 25);
 
       setTimeout(() => {
         this.domElement.classList.remove("sparkle");
-        //document.getElementById("player").classList.add("sparkle")
+
       }, 4000);
 
       setTimeout(() => {
@@ -309,7 +309,8 @@ class Game {
       this.updateCount(player);
       document.querySelector("#score span").innerHTML = `${this.score}`; // should update immediatly the score but ot does not.
 
-      sparksEffect("yellowstar", this.score);
+      sparksEffect(player.positionX, player.positionY, "yellowstar", this.score);
+      sparksEffect(1000, 500, "yellowstar", this.score);
 
     } else if (isGeometric(this.count) && this.count[0] !== 1) {
       scoreOccurence++;
@@ -321,12 +322,33 @@ class Game {
       });
       player.obstacles = [];
 
-      sparksEffect("yellowstar", this.score);
+      sparksEffect(player.positionX, player.positionY, "yellowstar", this.score);
+      sparksEffect(1000, 600, "yellowstar", this.score);
 
       this.updateCount(player);
       document.querySelector("#score span").innerHTML = `${this.score}`;
     }
   }
+  updateLifeBar(integrity) {
+    const lifeBar = document.getElementById('life-bar');
+    //const integrityValue = document.getElementById('integrity-value');
+    
+    // Update the integrity percentage text
+    //integrityValue.innerText = integrity + '%';
+
+    // Update the width of the life bar
+    lifeBar.style.width = integrity + '%';
+
+    // Change color based on integrity value
+    if (integrity < 20) {
+        lifeBar.style.backgroundColor = 'red';
+        lifeBar.style.width = '100%'
+    } else if (integrity < 35) {
+        lifeBar.style.backgroundColor = 'orange';
+    } else {
+        lifeBar.style.backgroundColor = 'green';
+    }
+    }
 }
 
 class Spark {
@@ -370,13 +392,13 @@ class Spark {
 }
 
 
-function sparksEffect(format, nbSparks) {
+function sparksEffect(X, Y, format, nbSparks) {
 
   const sparksArr = [];
 
   for (let i = 0; i < nbSparks; i++) {
-    let X = player.positionX;
-    let Y = player.positionY;
+    //let X = player.positionX;
+    //let Y = player.positionY;
     let newSpark = new Spark(X, Y, format);
     sparksArr.push(newSpark);
   }
@@ -431,3 +453,4 @@ document.addEventListener("contextmenu", (e) => {
   e.preventDefault();
   player.rotateRight();
 });
+

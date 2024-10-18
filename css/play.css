@@ -3,63 +3,186 @@ body {
     margin: 0;
     padding: 0;
     background-color: rgb(193, 221, 238);
-        
 }
 
 #board {
     height: 600px;
     width: 800px;
     overflow: hidden;
-    border: 2px solid rgb(163, 209, 236) ;
-    background-color: rgb(21, 137, 214);
+    border: 2px solid rgb(163, 209, 236);
+    background-color: #599af0;
     margin-top: 50px;
     margin-left: 50px;
     position: relative;
     border-radius: 30px;
- 
 }
 
 #player {
     height: 100px;
     width: 100px;
-    position : absolute;
+    position: absolute;
     display: inline-block;
-    
 }
 
 .obstacle, .spark {
     position: absolute;
-
 }
 
-
 #scoreBoard {
-    height: 600px;
+    height: 560px;
     width: 200px;
     overflow: hidden;
     background-color: #68df8a;
-    margin-top: 50px;
-    margin-left: 50px;
     position: fixed;
     left: 900px;
     top: 0px;
     border-radius: 30px;
-    border: 2px solid rgb(163, 209, 236) ;
+    border: 2px solid rgb(163, 209, 236);
+    padding: 20px; /* Padding around the content */
+    text-align: center; /* Center all the content */
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Space out elements evenly */
+    align-items: center;
+
+
 
 }
 
-#count-circles, #count-squares, #count-triangles, #integrity {
+/* Style for the images row */
+.images {
+    display: flex; /* Flexbox layout */
+    justify-content: space-around; /* Distribute images evenly */
+    margin-bottom: 50px; /* Space between images and numbers */
+}
+
+.images img {
+    width: 50px; /* Set fixed width for the images */
+    height: auto; /* Maintain aspect ratio */
+}
+
+/* Style for the numbers row */
+.numbers {
+    display: flex; /* Flexbox layout for the numbers */
+    justify-content: space-around; /* Space between the number paragraphs */
+    margin-bottom: 10px; /* Space between numbers and score */
+}
+
+.numbers p {
+    font-size: 20px; /* Font size for the number text */
+    margin: 0;
+}
+
+.numbers span {
+    font-weight: bold; /* Bold for numbers */
+    font-size: 25px; /* Bigger font size for numbers */
     font-family: Arial, sans-serif;
-    padding-left: 20px;
-    color: blue;
+    color: rgb(3, 3, 194);
+
+}
+
+
+
+
+
+/* Center the score text in the middle of the scoreBoard */
+.score-details {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 #score {
+    font-size: 20px;
     font-family: Arial, sans-serif;
-    padding-left: 20px;
+    color: rgb(3, 3, 194);
+    align-items: center;
+}
+#score span {
+    font-size: 48px;
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+    color: rgb(3, 3, 194);
+    
+}
+
+/* Integrity section placed at the bottom */
+.integrity-section {
+    width: 100%;
+    margin-bottom: 20px;
+    position: relative;
+    text-align: center;
+}
+
+/* Integrity text */
+#integrity {
+    font-size: 18px;
+    font-family: Arial, sans-serif;
+    margin-bottom: 10px;
 }
 
 
+
+
+
+/* Style for the images row */
+.images {
+    display: flex; /* Flexbox layout */
+    justify-content: center; /* Center images horizontally */
+    gap: 20px; /* Space between images */
+    margin-bottom: 10px; /* Space between images and numbers */
+  }
+  
+  .images img {
+    width: 33px; /* Set fixed width for the images */
+    height: auto; /* Maintain aspect ratio */
+  }
+  
+  /* Style for the numbers row */
+  .numbers {
+    display: flex; /* Flexbox layout for the numbers */
+    justify-content: center; /* Center numbers horizontally */
+    gap: 40px; /* Space between the number paragraphs */
+  }
+  
+  .numbers p {
+    font-size: 20px; /* Font size for the number text */
+    margin: 0;
+  }
+  
+  .numbers span {
+    font-weight: bold; /* Bold for numbers */
+    font-size: 30px; /* Bigger font size for numbers */
+  }
+
+
+
+
+/* Container for the life bar */
+#life-bar-container {
+    width: 90%;
+    height: 10px;
+    background-color: lightgray; /* Background for the bar */
+    border-radius: 20px;
+    margin-top: 20px; /* Space between score and life bar */
+    margin-left: 10px;
+    margin-right: 15px;
+    position: absolute;
+    bottom: 20px; /* Align to the bottom of the scoreBoard */
+    left: 0;
+    padding: 5px;
+}
+
+/* The actual life bar */
+#life-bar {
+    height: 100%;
+    width: 100%; /* Initially full width, controlled by JS */
+    background-color: rgb(2, 126, 2); /* Default healthy color */
+    border-radius: 20px;
+    transition: width 0.5s ease, background-color 0.5s ease; /* Smooth transition */
+}
 
 
 /* Base div styling */
@@ -68,7 +191,7 @@ body {
     height: 200px;
     background-color: #f0f0f0;
     position: relative;
-    border-radius: 10px;
+    border-radius: 5px;
     overflow: hidden;
   }
   
@@ -134,4 +257,3 @@ body {
     }
   }
   
-

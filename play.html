@@ -11,18 +11,37 @@
     
     <div id="board"></div>
     <div id="start"></div>
+
     <div id="scoreBoard">
-
-        <div id="count">
-            <p id="count-circles">Circles: <span></span></p>
-            <p id="count-squares">Squares: <span></span></p>
-            <p id="count-triangles">Triangles: <span></span></p>
-            <p id="score">Score: <span></span></p>
             
-            <p id="integrity">Structure integrity: <span></span></p>
-        </div>
+            <div class="images">
+                <img src="./images/c.svg" alt="Circles">
+                <img src="./images/s.svg" alt="Squares">
+                <img src="./images/t.svg" style="transform: rotate(180deg);" alt="Triangles">
+            </div>
+
+            <div class="numbers">
+                <p id="count-circles"><span>0</span></p>
+                <p id="count-squares"><span>0</span></p>
+                <p id="count-triangles"><span>0</span></p>    
+            </div>
+
+            <div class="score-details">   
+                <p id="score">
+                    Score <br>
+                    <span>0</span>
+                </p>
+            </div>
+            
 
 
+            <div class="integrity-section"> 
+                <p id="integrity">Structure integrity: <span>100</span></p>
+            </div>
+            
+            <div id="life-bar-container">
+                <div id="life-bar"></div>
+            </div>
         
     </div>
    
